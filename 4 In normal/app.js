@@ -125,8 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         alert('Bad move');
       }
+      checkBoard();
     };
-
-    checkBoard();
   }
 });
