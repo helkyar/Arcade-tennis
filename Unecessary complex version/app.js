@@ -5,119 +5,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const displayPlayer = document.querySelector('#player');
   const selector = document.querySelectorAll('.selector');
   let currentPlayer = 1;
-  let row = row.val || 7;
-  let col = row.val || 6;
+  let row = 7;
+  let col = 6;
 
   // ======================== CREATE THE BOARD ========================================
   // ========================== CREATION END ==========================================
+  function checkerAbstractor(i, player, operator) {
+    let win = 0;
+    for (let j = 0; j < 3; j++) {
+      i += operator;
+      if (squares[i].classList.contains(player)) win++;
+      if (win === 3) {
+        result.innerHTML = `Player ${player} wins!`;
+
+        for (let i = 0; i < squares.length; i++) {
+          if (!squares[i].classList.contains('taken')) {
+            squares[i].classList.add('taken');
+            squares[i].classList.add('cero');
+          }
+        }
+      }
+    }
+  }
 
   function checkBoard(i, player) {
     let up = 0;
     let down = 0;
     let left = 0;
     let right = 0;
-    const t = i;
 
     if (i < row * 3) up++;
     if (i >= squares.length - row * 3) down++;
     if (i % row <= 3) left++;
     if (i % row >= row - 3) right++;
 
-    let win = 0;
-    i = t;
-    if (right === 0) {
-      for (let j = 0; j < 3; j++) {
-        i++;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'r', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (left === 0) {
-      for (let j = 0; j < 3; j++) {
-        i--;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'l', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (down === 0) {
-      for (let j = 0; j < 3; j++) {
-        i += row;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'd', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (up === 0) {
-      for (let j = 0; j < 3; j++) {
-        i -= row;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'u', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (right === 0 && down === 0) {
-      for (let j = 0; j < 3; j++) {
-        i += row + 1;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'r&d', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (left === 0 && up === 0) {
-      for (let j = 0; j < 3; j++) {
-        i -= row + 1;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'l&u', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (left === 0 && down === 0) {
-      for (let j = 0; j < 3; j++) {
-        i += row - 1;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'l&d', win);
-      }
-    }
-
-    win = 0;
-    i = t;
-    if (right === 0 && up === 0) {
-      for (let j = 0; j < 3; j++) {
-        i -= row - 1;
-        if (squares[i].classList.contains(player)) win++;
-        if (win === 3) result.innerHTML = `Player ${player} wins!`;
-
-        console.log(i, player, 'r&u', win);
-      }
-    }
+    if (right === 0) checkerAbstractor(i, player, 1);
+    if (left === 0) checkerAbstractor(i, player, -1);
+    if (down === 0) checkerAbstractor(i, player, row);
+    if (up === 0) checkerAbstractor(i, player, -1 * row);
+    if (right === 0 && down === 0) checkerAbstractor(i, player, row + 1);
+    if (left === 0 && up === 0) checkerAbstractor(i, player, -1 * (row + 1));
+    if (left === 0 && down === 0) checkerAbstractor(i, player, row - 1);
+    if (right === 0 && up === 0) checkerAbstractor(i, player, -1 * (row - 1));
   }
 
   for (let i = 0; i < selector.length; i++) {
@@ -126,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const z = i;
       while (true) {
         if (!squares[i].classList.contains('taken')) {
-          if (squares[i + row].classList.contains('taken')) {
+          if (squares[i + 7].classList.contains('taken')) {
             squares[i].classList.add('taken');
             if (currentPlayer === 1) {
               squares[i].classList.add('one');
@@ -142,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             i = z; //reset i
             break;
           }
-          i += row; //next cell in the column
+          i += 7; //next cell in the column
         } else {
           break;
         }
@@ -150,3 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// CSS
+// ->Animaciones de caída
+// ->Hover muestra ficha
+// JS
+// ->Generación de tablero con columnas y filas a elegir (7x6 por defecto)
+// ->Botón de reset
+// ->Fin de partida
