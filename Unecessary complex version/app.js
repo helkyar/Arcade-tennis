@@ -17,11 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const wraper = document.querySelector('.wraper');
     const grid = document.querySelector('.grid');
 
-    wraper.style.cssText = `height: ${5 * (col + 1)}vmin; 
-                            margin-left: ${(5 * row) / -2}vmin`;
-    grid.style.cssText = `height: ${5 * col}vmin; 
-                          width: ${5 * row}vmin; 
-                          margin-left: ${(5 * row) / -2}vmin`;
+    wraper.style.cssText = `height: ${2 * (col + 1)}rem; 
+                            margin-left: ${(2 * row) / -2}rem`;
+    grid.style.cssText = `height: ${2 * col}rem; 
+                          width: ${2 * row}rem; 
+                          margin-left: ${(2 * row) / -2}rem`;
 
     let cell = '<div></div>'.repeat(row * col);
     let cellBottom = '<div class="taken bottom"></div>'.repeat(row);
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let right = 0;
 
       if (i < row * 3) up++;
-      if (i >= squares.length - row * 3) down++;
-      if (i % row <= 3) left++;
+      if (i >= squares.length - row * 4) down++;
+      if (i % row < 3) left++;
       if (i % row >= row - 3) right++;
 
       if (right === 0) checkerAbstractor(i, player, 1);
