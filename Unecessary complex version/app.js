@@ -1,3 +1,5 @@
+//Css drop animation
+
 document.addEventListener('DOMContentLoaded', () => {
   // ======================== BOARD VARIABLES ========================================
   const rowInput = document.querySelector('.row');
@@ -70,44 +72,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkBoard(i, player) {
-      let up = 0;
-      let down = 0;
-      let left = 0;
-      let right = 0;
-
-      if (i < row * 3) up++;
-      if (i >= squares.length - row * 4) down++;
-      if (i % row < 3) left++;
-      if (i % row >= row - 3) right++;
-
-      if (right === 0) checkerAbstractor(i, player, 1);
-      if (left === 0) checkerAbstractor(i, player, -1);
-      if (down === 0) checkerAbstractor(i, player, row);
-      if (up === 0) checkerAbstractor(i, player, -1 * row);
-      if (right === 0 && down === 0) checkerAbstractor(i, player, row + 1);
-      if (left === 0 && up === 0) checkerAbstractor(i, player, -1 * (row + 1));
-      if (left === 0 && down === 0) checkerAbstractor(i, player, row - 1);
-      if (right === 0 && up === 0) checkerAbstractor(i, player, -1 * (row - 1));
+      checkerAbstractor(i, player, 1); //left-right
+      checkerAbstractor(i, player, row); //up-down
+      checkerAbstractor(i, player, (row + 1) * -1); //d-left
+      checkerAbstractor(i, player, row - 1); //d-right
     }
 
-    function checkerAbstractor(i, player, operator) {
+    function checkerAbstractor(i, player, op) {
       let win = 0;
-      for (let j = 0; j < 3; j++) {
-        i += operator;
-        if (squares[i].classList.contains(player)) win++;
+      let contains = () => squares[i] && squares[i].classList.contains(player);
 
-        //Winning condition met
-        if (win === 3) {
-          result.innerHTML = `Player ${player} wins!`;
-          wraper.classList.add('hidden');
-          btn.disabled = true;
+      while (true) {
+        if (contains() && (!((i + 1) % row == 0) || op == row)) i += op;
+        else {
+          win++;
+          i += op * -2;
+          break;
+        }
+      }
 
-          //Board cels disabled
-          for (let i = 0; i < squares.length; i++) {
-            if (!squares[i].classList.contains('taken')) {
-              squares[i].classList.add('taken');
-              squares[i].classList.add('cero');
-            }
+      while (true) {
+        if (contains() && (!(i % row == 0) || op == row)) {
+          win++;
+          i += op * -1;
+        } else break;
+      }
+
+      //Winning condition met
+      if (win === 4) {
+        result.innerHTML = `Player ${player} wins!`;
+        wraper.classList.add('hidden');
+        btn.disabled = true;
+
+        //Board cels disabled
+        for (let i = 0; i < squares.length; i++) {
+          if (!squares[i].classList.contains('taken')) {
+            squares[i].classList.add('taken');
+            squares[i].classList.add('cero');
           }
         }
       }
