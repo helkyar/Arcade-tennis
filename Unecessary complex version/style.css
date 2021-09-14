@@ -73,3 +73,23 @@ section:hover .select {
 .grid .bottom {
   box-shadow: none;
 }
+@keyframes example {
+  0% {
+    position: relative;
+    top: -10rem;
+  }
+  75% {
+    top: 0rem;
+  }
+  80% {
+    top: -1rem;
+  }
+  100% {
+    top: 0rem;
+  }
+}
+.one,
+.two {
+  animation-name: example;
+  animation-duration: 0.5s;
+}
