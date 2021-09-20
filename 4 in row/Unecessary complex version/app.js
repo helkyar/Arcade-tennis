@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkerAbstractor(i, player, op) {
+      i += op;
       let win = 0;
       let contains = () => squares[i] && squares[i].classList.contains(player);
 
