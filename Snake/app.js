@@ -9,7 +9,7 @@ document.addEventListener('DOMcontentLoaded', () => {
   let currentSnake = [2, 1, 0];
   let direction = 1;
   let score = 0;
-  let speed = 1;
+  let speed = 0.9;
   let intervalTime = 0;
 
   // Start/Restart
@@ -32,17 +32,43 @@ document.addEventListener('DOMcontentLoaded', () => {
   //   Snake behaviour
   function moveOutcomes() {
     // Hit self and borders
+    if (
+      (currentSnake[0] + width >= width * width && direction === width) ||
+      (currentSnake[0] % width === width - 1 && direction === 1) ||
+      (currentSnake[0] % width === 0 && direction === -1) ||
+      (currentSnake[0] - width < 0 && direction === -width) ||
+      squares[currentSnake[0] + direction].classList.contains('snake')
+    ) {
+      return clearInterval(interval);
+    }
+
+    const tail = currentSnake.pop();
+    squares[tail].classList.remove('snake');
+    currentSnake.unshift(currentSnake[0] + direction);
+
     // Eating apple
+    if (squares[currentSnake[0]].classList.contains('apple')) {
+      squares[currentSnake[0]].classList.remove('apple');
+      squares[tail].classList.add('snake');
+      currentSnake.push(tail);
+      score++;
+      scoreDisplay.textContent = score;
+      intervalTime = intervalTime * speed;
+      interval = setTimeout(moveOutcomes, intervalTime);
+      // randomApple();
+    }
+    squares[currentSnake[0]].classList.add('snake');
   }
 
+  // Random Apple
+
   //   Keyboard binding
-  document.addEventListener('keyup', control);
 
   function control(e) {
     squares[index].classList.remove('snake');
 
     if (e.keyCode === 37) {
-      direction - 1;
+      direction = -1;
     } else if (e.keyCode === 38) {
       direction = -width;
     } else if (e.keyCode === 39) {
@@ -51,4 +77,7 @@ document.addEventListener('DOMcontentLoaded', () => {
       direction = +width;
     }
   }
+
+  document.addEventListener('keyup', control);
+  btnStart.addEventListener('click', startGame);
 });
