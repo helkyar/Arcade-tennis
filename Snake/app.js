@@ -1,7 +1,9 @@
-document.addEventListener('DOMcontentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div');
   const scoreDisplay = document.querySelector('span');
   const btnStart = document.querySelector('.start');
+
+  console.log('e');
 
   const width = 10;
   let index = 0;
@@ -11,15 +13,18 @@ document.addEventListener('DOMcontentLoaded', () => {
   let score = 0;
   let speed = 0.9;
   let intervalTime = 0;
+  let interval = 0;
 
+  console.log('e');
   // Start/Restart
   function startGame() {
+    console.log('i');
     currentSnake.forEach((i) => squares[i].classList.remove('snake'));
     squares[appleIndex].classList.remove('apple');
-    clearinterval(intervalTime);
+    clearInterval(interval);
     score = 0;
 
-    // Random apple
+    //randomApple();
     direction = 1;
     scoreDisplay.innerText = score;
     intervalTime = 1000;
