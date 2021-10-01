@@ -1,3 +1,5 @@
+/*Project based on "Snake" from Ania Kubow: https://github.com/kubowania/Nokia3310-Snake */
+
 document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div');
   const scoreDisplay = document.querySelector('span');
