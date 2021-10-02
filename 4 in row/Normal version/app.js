@@ -1,3 +1,7 @@
+
+
+/*Project based on "Connect 4" from Ania Kubow: https://github.com/kubowania/connect-four */
+
 document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div');
   const result = document.querySelector('#result');
