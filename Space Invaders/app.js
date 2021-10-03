@@ -1,3 +1,5 @@
+/*Project based on "Space invaders" from Ania Kubow: https://github.com/kubowania/space-invaders */
+
 document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div');
   const squares = document.querySelector('#result');
